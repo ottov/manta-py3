@@ -129,7 +129,9 @@ results -- in this case the dry run will not cover the full 'live' run task set.
     def isLocalSmtp() :
         import smtplib
         try :
-            smtplib.SMTP('localhost')
+            # Without a timeout this waits forever for the greeting from a port 25 that accepts but never answers,
+            # before the workflow has started or logged anything.
+            smtplib.SMTP('localhost', timeout=10)
         except :
             return False
         return True
