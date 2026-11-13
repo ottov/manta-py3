@@ -395,7 +395,8 @@ def isLocalSmtp() :
     """
     import smtplib
     try :
-        smtplib.SMTP('localhost')
+        # a timeout, as in makeRunScript.py: a port 25 that accepts but never greets would otherwise block forever
+        smtplib.SMTP('localhost', timeout=10)
     except :
         return False
     return True
